@@ -22,11 +22,13 @@ export interface IndexFields {
   [key: string]: {
     type: esDataType,
     mongoField?: string,
+    analyzer?: string,
   },
 }
 
 export interface SyncData {
   indexName: string,
+  indexSettings?: any,
   collectionName: string,
   selector: FilterQuery<any>,
   fields?: IndexFields,

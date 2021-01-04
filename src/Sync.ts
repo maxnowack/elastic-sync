@@ -1,4 +1,5 @@
 import { Client as ESClient } from '@elastic/elasticsearch'
+import omit from 'lodash.omit'
 import { MongoClient, Db, Timestamp } from 'mongodb'
 import pMap from 'p-map'
 import pRetry from 'p-retry'
@@ -81,7 +82,9 @@ export default class Sync {
       body,
     }).catch((err) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      throw err.meta.body.error
+      console.log(JSON.stringify(err.meta))
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      throw new Error(err?.meta?.body?.error)
     })
   }
 
@@ -99,9 +102,11 @@ export default class Sync {
         mappings: {
           properties: Object.keys(fields).reduce((memo, field) => ({
             ...memo,
-            [field]: { type: fields[field].type },
+            [field]: omit(fields[field], 'mongoField'),
           }), {}),
         },
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        ...(this.syncData.indexSettings && { settings: this.syncData.indexSettings }),
       },
     })
   }
