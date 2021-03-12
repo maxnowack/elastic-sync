@@ -1,0 +1,59 @@
+mongo:
+  url: mongodb://localhost:30017/doitfornature?socketTimeoutMS=6000000
+  options:
+    useNewUrlParser: true
+    useUnifiedTopology: true
+elastic:
+  node: http://localhost:9200
+sync:
+- indexName: videos
+  collectionName: videos
+  initialSync:
+    concurrency: 60
+  selector:
+    deleted: false
+    disabled: false
+    hasBasics: true
+    hasDetails: true
+    hasStars: true
+    segment: straight
+  fields:
+    title:
+      type: 'text'
+      mongoField: title
+    categories:
+      type: 'keyword'
+      mongoField: categories
+    stars:
+      type: 'keyword'
+      mongoField: stars._id
+    duration:
+      type: 'double'
+      mongoField: duration
+    publishDate:
+      type: 'date'
+      mongoField: publishDate
+    rating:
+      type: 'double'
+      mongoField: rating
+    ratings:
+      type: 'double'
+      mongoField: ratings
+    slug:
+      type: 'keyword'
+      mongoField: slug
+    tags:
+      type: 'text'
+      mongoField: tags
+    views:
+      type: 'double'
+      mongoField: views
+    defaultThumb:
+      type: 'keyword'
+      mongoField: defaultThumb
+    thumb:
+      type: 'keyword'
+      mongoField: thumb
+    thumbs:
+      type: 'object'
+      mongoField: thumbs

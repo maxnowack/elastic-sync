@@ -98,6 +98,7 @@ export default class Sync {
     if (!fields) throw new Error('Cannot create index from empty fields')
     return this.elastic.indices.create({
       index: this.syncData.indexName,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       body: {
         mappings: {
           properties: Object.keys(fields).reduce((memo, field) => ({

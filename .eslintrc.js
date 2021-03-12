@@ -3,7 +3,7 @@ module.exports = {
     'airbnb-base',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking'
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -18,7 +18,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       typescript: {
-        directory: './tsconfig.json',
+        project: './tsconfig.json',
       },
       node: {
         extensions: ['.js', '.ts', '.json'],
@@ -36,13 +36,13 @@ module.exports = {
     'import/extensions': 'off',
     '@typescript-eslint/unbound-method': 'off',
     '@typescript-eslint/member-delimiter-style': ['error', {
-      'multiline': {
-        'delimiter': 'comma',
-        'requireLast': true
+      multiline: {
+        delimiter: 'comma',
+        requireLast: true,
       },
-      'singleline': {
-        'delimiter': 'comma',
-        'requireLast': false
+      singleline: {
+        delimiter: 'comma',
+        requireLast: false,
       },
     }],
     '@typescript-eslint/explicit-function-return-type': 'off',

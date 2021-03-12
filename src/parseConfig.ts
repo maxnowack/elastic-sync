@@ -9,5 +9,5 @@ export default async function parseConfig(configFile: string) {
   }
 
   const content = await fs.readFile(configFile, 'utf8')
-  return yaml.safeLoad(content) as Config
+  return yaml.load(content) as Config
 }
