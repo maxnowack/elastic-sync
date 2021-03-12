@@ -1,4 +1,4 @@
-FROM node as build
+FROM node:14 as build
 WORKDIR /app
 COPY package-lock.json package-lock.json
 COPY package.json package.json
@@ -6,7 +6,7 @@ RUN npm install --no-audit
 COPY . .
 RUN npm run build
 
-FROM node:slim
+FROM node:14-slim
 ENV NODE_ENV production
 
 WORKDIR /app
