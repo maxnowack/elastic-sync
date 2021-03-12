@@ -120,6 +120,13 @@ export default class Sync {
     this.log(`added doc ${id}`)
   }
 
+  public async removeDoc(id: string) {
+    await this.elastic.delete({
+      index: this.syncData.indexName,
+      id,
+    })
+  }
+
   public async initialSync() {
     const sync = this.syncData
     this.log('starting initial full sync')
@@ -169,12 +176,19 @@ export default class Sync {
     })
 
     watchCursor.on('change', (next) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const doc = (next as any).fullDocument as { [key: string]: any }
-      this.addDoc(doc).catch((err) => {
-        console.error(err)
-        process.exit(1)
-      })
+      if (['insert', 'update'].includes(next.operationType)) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const doc = (next as any).fullDocument as { [key: string]: any }
+        this.addDoc(doc).catch((err) => {
+          console.error(err)
+          process.exit(1)
+        })
+      } else if (next.operationType === 'delete') {
+        this.removeDoc(next.documentKey._id as string).catch((err) => {
+          console.error(err)
+          process.exit(1)
+        })
+      }
     })
 
     watchCursor.on('close', () => {
