@@ -23,6 +23,6 @@ const start = async () => {
 start().catch((err) => {
   console.error(err)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  if (err.meta) console.log(JSON.stringify(err.meta, null, 2))
+  if (err) console.log(JSON.stringify(err, null, 2))
   process.exit(1)
 })
