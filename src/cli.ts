@@ -15,6 +15,8 @@ const start = async () => {
     const elasticSync = new ElasticSync(config, sync)
     elasticSync.initialize().catch((err) => {
       console.error(err)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (err) console.log(JSON.stringify(err, null, 2))
       process.exit(1)
     })
   })
